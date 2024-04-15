@@ -17,11 +17,21 @@ import java.util.Iterator;
 public class Dao_Cliente {
     private Connection conex;
 
+    /**
+     * @param conn
+     * @brief Constructor de Dao_Cliente
+     * @author Juanchii Vidal
+     */
     public Dao_Cliente(Connection conn) {
 
         this.conex = conn;
     }
 
+    /**
+     * @param clien
+     * @throws SQLException
+     * @brief Metodo de inserción de clientes.
+     */
     public void insertCliente(CSVParser clien) throws SQLException {
         this.conex = MySQLDaoFactory.getConex();
         for (CSVRecord row : clien) {
@@ -34,6 +44,12 @@ public class Dao_Cliente {
 
     }
 
+    /**
+     * @param client
+     * @throws SQLException
+     * @brief Metodo de inserción de clientes.
+     * Inserta clientes en la base de datos.
+     */
     public void InsertarClienteIndi(Cliente client) throws SQLException {
         int id = client.getIdCliente();
         String nombre = client.getNombre();
@@ -48,6 +64,12 @@ public class Dao_Cliente {
         conex.commit();
     }
 
+    /**
+     * @return Retorna un ArrayList de Clientes.
+     * @throws SQLException
+     * @brief Metodo que trae la lista de clientes que más facturaron.
+     * Al ejecutarse el metodo, retorna la lista de los 10 clientes con más cantidad de facturas.
+     */
     public ArrayList<DtoCliente> getListClientesFacturacion() throws SQLException {
         ArrayList<DtoCliente> clientes = new ArrayList<DtoCliente>();
         String sqlSentencia = "SELECT c.idCliente, c.nombre,c.email, SUM(fp.cantidad) AS total_facturado " +
@@ -71,6 +93,11 @@ public class Dao_Cliente {
         return clientes;
     }
 
+    /**
+     * @param listClientes
+     * @brief Metodo que imprime los clientes.
+     * Muestra por consola los clientes detalladamente.
+     */
     public static void imprimirClientes(ArrayList<DtoCliente> listClientes) {
         if (listClientes != null) {
             System.out.println("-----------------------------------------------");

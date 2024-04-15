@@ -17,6 +17,10 @@ public class DerbyDaoFactory extends FactoryGeneral {
     public static final String driver = "jdbc:derby:jdbc_db;create=true";
     public static Connection conex;
 
+    /**
+     * @brief Bloque estático.
+     * Contiene un try/catch con la conexion.
+     */
     static {
         try {
             conex = DriverManager.getConnection(driver);
@@ -25,6 +29,10 @@ public class DerbyDaoFactory extends FactoryGeneral {
         }
     }
 
+    /**
+     * @return Retorna una instancia.
+     * @brief Metodo que devuelve la instancia.
+     */
     public static synchronized DerbyDaoFactory getInstance() {
         if (instance == null) {
             instance = new DerbyDaoFactory();
@@ -32,6 +40,9 @@ public class DerbyDaoFactory extends FactoryGeneral {
         return instance;
     }
 
+    /**
+     * @brief Metodo que cierra la conexion.
+     */
     public void closeConnection() {
         try {
             conex.close();
@@ -40,29 +51,49 @@ public class DerbyDaoFactory extends FactoryGeneral {
         }
     }
 
+    /**
+     * @return Retorna un Dao_Factura con la conexion como parametro.
+     * @brief Metodo que devuelve FacturaDAO.
+     */
     @Override
     public Dao_Factura getFacturaDAO() {
 
         return new Dao_Factura(conex);
     }
 
+    /**
+     * @return Retorna un Dao_Producto con la conexion como parametro.
+     * @brief Metodo que devuelve ProductoDAO.
+     */
     @Override
     public Dao_Producto getProductoDAO() {
 
         return new Dao_Producto(conex);
     }
 
+    /**
+     * @return Retorna un Dao_Cliente con la conexion como parametro.
+     * @brief Metodo que devuelve ClienteDAO.
+     */
     @Override
     public Dao_Cliente getClienteDAO() {
 
         return new Dao_Cliente(conex);
     }
 
+    /**
+     * @return Retorna un Dao_FacturaProducto con la conexion como parametro.
+     * @brief Metodo que devuelve FacturaProductoDao.
+     */
     @Override
     public Dao_FacturaProducto getFacturaProductoDao() {
         return new Dao_FacturaProducto(conex);
     }
 
+    /**
+     * @throws SQLException
+     * @brief Metodo que elimina las tablas de la base de datos.
+     */
     @Override
     public void dropTables() throws SQLException {
         String dropF_Pro = "DROP TABLE Factura_Producto";
@@ -80,28 +111,10 @@ public class DerbyDaoFactory extends FactoryGeneral {
         System.out.println("Se borro todas las tablas de Derby");
     }
 
-    public void dropTables2() throws SQLException {
-        try {
-            String dropF_Pro = "DROP TABLE Factura_Producto";
-            this.conex.prepareStatement(dropF_Pro).execute();
-            this.conex.commit();
-            System.out.println("Tabla Factura_Producto eliminada");
-        } catch (SQLException e) {
-            System.out.println("La tabla Factura_Producto no existe");
-        }
-
-        try {
-            String dropFactura = "DROP TABLE Factura";
-            this.conex.prepareStatement(dropFactura).execute();
-            this.conex.commit();
-            System.out.println("Tabla Factura eliminada");
-        } catch (SQLException e) {
-            System.out.println("La tabla Factura no existe");
-        }
-
-        // Repetir este proceso para otras tablas...
-    }
-
+    /**
+     * @throws SQLException
+     * @brief Metodo que crea las tablas en la base de datos.
+     */
     @Override
     public void createTables() throws SQLException {
 

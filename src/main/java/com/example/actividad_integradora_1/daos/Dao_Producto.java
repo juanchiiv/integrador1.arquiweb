@@ -14,11 +14,21 @@ import java.sql.SQLException;
 public class Dao_Producto {
     private Connection conex;
 
+    /**
+     * @param conn
+     * @brief Constructor de Dao_Producto.
+     */
     public Dao_Producto(Connection conn) {
 
         this.conex = conn;
     }
 
+    /**
+     * @return Retorna un Producto
+     * @throws SQLException
+     * @brief Metodo que trae el producto que mas recaudo.
+     * Se obtiene el producto que mas recaudo segun la suma entre la cantidad y el valor.
+     */
     public Producto getProductMasRecaudo() throws SQLException {
         Producto resultado = null;
         String sqlSentencia = "SELECT p.*, SUM(fp.cantidad * p.valor) AS recaudacion_total\n" +
@@ -37,6 +47,11 @@ public class Dao_Producto {
         return resultado;
     }
 
+    /**
+     * @param prod
+     * @throws SQLException
+     * @brief Metodo de insercion de productos.
+     */
     public void insertProducto(CSVParser prod) throws SQLException {
         this.conex = MySQLDaoFactory.getConex();
         for (CSVRecord row : prod) {
@@ -48,6 +63,12 @@ public class Dao_Producto {
         }
     }
 
+    /**
+     * @param prod
+     * @throws SQLException
+     * @brief Metodo de insercion de productos.
+     * Inserta productos en la base de datos.
+     */
     public void InsertarProductoIndi(Producto prod) throws SQLException {
         int id = prod.getIdProducto();
         String nombre = prod.getNombre();

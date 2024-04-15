@@ -20,7 +20,12 @@ import java.util.Iterator;
 
 public class Main {
 
-
+    /**
+     * @param args
+     * @throws SQLException
+     * @throws IOException
+     * @brief Metodo main de Java.
+     */
     public static void main(String[] args) throws SQLException, IOException {
         //consigna 1)
         FactoryGeneral mysql = FactoryGeneral.getDAOFactory(2);

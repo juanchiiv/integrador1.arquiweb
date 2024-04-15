@@ -19,6 +19,10 @@ public class MySQLDaoFactory extends FactoryGeneral {
     private static String url_driver = "jdbc:mysql://localhost:3306/base_arquitectura";
     public static Connection conex;
 
+    /**
+     * @brief Bloque estatico con try/catch
+     * Contiene informacion de la conexion.
+     */
     static {
         try {
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -38,6 +42,11 @@ public class MySQLDaoFactory extends FactoryGeneral {
         }
     }
 
+    /**
+     * @return Retorna conex.
+     * @brief Metodo estatico getConex
+     * Se obtiene la conexion.
+     */
     public static Connection getConex() {
         try {
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -58,6 +67,10 @@ public class MySQLDaoFactory extends FactoryGeneral {
         return conex;
     }
 
+    /**
+     * @return Retorna una instancia.
+     * @brief Metodo que devuelve la instancia.
+     */
     public static synchronized MySQLDaoFactory getInstance() {
         if (instance == null) {
             instance = new MySQLDaoFactory();
@@ -65,6 +78,9 @@ public class MySQLDaoFactory extends FactoryGeneral {
         return instance;
     }
 
+    /**
+     * @brief Metodo que cierra la conexion.
+     */
     public void closeConnection() {
         try {
             conex.close();
@@ -73,6 +89,10 @@ public class MySQLDaoFactory extends FactoryGeneral {
         }
     }
 
+    /**
+     * @throws SQLException
+     * @brief Metodo que elimina las tablas de la base de datos.
+     */
     @Override
     public void dropTables() throws SQLException {
         String dropF_Pro = "DROP TABLE IF EXISTS Factura_Producto";
@@ -93,6 +113,10 @@ public class MySQLDaoFactory extends FactoryGeneral {
         System.out.println("Se borro todas las tablas de MySQL");
     }
 
+    /**
+     * @throws SQLException
+     * @brief Metodo que crea las tablas en la base de datos.
+     */
     public void createTables() throws SQLException {
         //crear primero Cliente luego Producto, luego Factura y finalmente Factura_Producto
         String tCliente = "CREATE TABLE Cliente( " + "idCliente int  NOT NULL, " + "nombre varchar(500)  NOT NULL, " + "email varchar(150)  NOT NULL, " + "PRIMARY KEY (idCliente)" + ")";
@@ -114,26 +138,44 @@ public class MySQLDaoFactory extends FactoryGeneral {
 
     }
 
+    /**
+     * @return Retorna Dao_Factura con la conex como parametro.
+     * @brief Metodo que devuelve FacturaDAO.
+     */
     @Override
     public Dao_Factura getFacturaDAO() {
 
         return new Dao_Factura(conex);
     }
 
+    /**
+     * @return Retorna Dao_Producto con la conex como parametro.
+     * @brief Metodo que devuelve ProductoDAO.
+     */
     @Override
     public Dao_Producto getProductoDAO() {
 
         return new Dao_Producto(conex);
     }
 
+    /**
+     * @return Retorna Dao_Cliente con la conex como parametro.
+     * @brief Metodo que devuelve ClienteDAO.
+     */
     @Override
     public Dao_Cliente getClienteDAO() {
 
         return new Dao_Cliente(conex);
     }
 
+    /**
+     * @return Retorna Dao_FacturaProducto con la conex como parametro.
+     * @brief Metodo que devuelve FacturaProductoDao.
+     */
     @Override
     public Dao_FacturaProducto getFacturaProductoDao() {
+
+
         return new Dao_FacturaProducto(conex);
     }
 

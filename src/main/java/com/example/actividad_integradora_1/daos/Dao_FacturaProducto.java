@@ -14,11 +14,20 @@ import java.sql.SQLException;
 public class Dao_FacturaProducto {
     private Connection conex;
 
+    /**
+     * @param conn
+     * @brief Constructor de Dao_FacturaProducto.
+     */
     public Dao_FacturaProducto(Connection conn) {
 
         this.conex = conn;
     }
 
+    /**
+     * @param datFp
+     * @throws SQLException
+     * @brief Metodo de insercion de la tabla intermedia entre Factura y Producto.
+     */
     public void insertFacturaProducto(CSVParser datFp) throws SQLException {
         this.conex = MySQLDaoFactory.getConex();
         for (CSVRecord row : datFp) {
@@ -30,6 +39,11 @@ public class Dao_FacturaProducto {
         }
     }
 
+    /**
+     * @param fp
+     * @throws SQLException
+     * @brief Metodo de insercion de la tabla intermedia entre Factura y Producto.
+     */
     public void insertFacturaProductoIndi(Factura_Producto fp) throws SQLException {
         int idF = fp.getIdFactura();
         int idP = fp.getIdProducto();

@@ -14,10 +14,20 @@ import java.sql.SQLException;
 public class Dao_Factura {
     private Connection conex;
 
+    /**
+     * @param conn
+     * @brief Constructor de Dao_Factura
+     */
     public Dao_Factura(Connection conn) {
         this.conex = conn;
     }
 
+
+    /**
+     * @param fact
+     * @throws SQLException
+     * @brief Metodo de inserción de facturas.
+     */
     public void insertFactura(CSVParser fact) throws SQLException {
         this.conex = MySQLDaoFactory.getConex();
         for (CSVRecord row : fact) {
@@ -29,6 +39,12 @@ public class Dao_Factura {
 
     }
 
+    /**
+     * @param fact
+     * @throws SQLException
+     * @brief Metodo de insercion de facturas
+     * Inserta facturas en la base de datos.
+     */
     public void InsertarFacturaIndi(Factura fact) throws SQLException {
         int idC = fact.getIdCliente();
         int idF = fact.getIdFactura();
